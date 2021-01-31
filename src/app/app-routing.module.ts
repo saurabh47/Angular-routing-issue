@@ -5,28 +5,16 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { SpecialComponent } from './special/special.component';
 import { environment } from '../environments/environment';
 
-
-const specialRoutes = [];
+let routes: Routes = [
+  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: 'login', component: LoginComponent }
+];
 
 if(environment.includeSpecialRoute){
-  specialRoutes.push({
-    path: 'special-component',
-    component: SpecialComponent
-  });
+  routes.push({ path: 'special-component', component: SpecialComponent });
 }
 
-const routes: Routes = [
-  { path: "", redirectTo: "login", pathMatch: "full" },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  ...specialRoutes,
-  {
-    path: '**',
-    component: NotFoundComponent
-  }
-];
+routes.push({ path: '**', component: NotFoundComponent });
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
